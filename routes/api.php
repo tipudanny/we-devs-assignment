@@ -30,7 +30,7 @@ Route::group(['prefix' => '/v1'], function () {
         Route::delete('products/{id}',  [ProductController::class, 'destroy']);
 
 //      route for logout
-        Route::delete('logout',   [AuthController::class, 'logout']);
+        Route::post('logout',   [AuthController::class, 'logout']);
 
     });
 });

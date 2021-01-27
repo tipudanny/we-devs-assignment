@@ -8,8 +8,8 @@ use App\Http\Resources\ProductDetailsResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -27,9 +27,13 @@ class ProductController extends Controller
             $data['image'] = time().$request->image->getClientOriginalName();
             $request->image->storeAs('/public', $data['image']);
             $product = Product::create($data);
-            return response()->json( [ 'product' => $product, 'message' => 'Product Added Successfully' ], 201 );
+            return response()->json( [ 
+                'product' => $product, 
+                'message' => 'Product Added Successfully',
+                'code' => 'success',
+             ], 201 );
         } catch ( Exception $e ) {
-            return response()->json(['error' => 'Failed to add product!'], 422);
+            return response()->json(['error' => 'Failed to add product!']);
         }
         //return $data;
     }
@@ -45,6 +49,7 @@ class ProductController extends Controller
 
     public function update(ProductUpdateRequest $request,$id)
     {
+        //return $request->all();
         $data       =  $request->all();
         $product    = Product::findOrFail($id);
 
@@ -61,7 +66,10 @@ class ProductController extends Controller
         }
         try {
             $product->save();
-            return response()->json( [ 'product' => $product, 'message' => 'Product Update Successfully' ], 201 );
+            return response()->json( [ 
+                'product' => $product, 'message' => 'Product Update Successfully',
+                'code' => 'success',
+             ], 201 );
         } catch ( Exception $e ) {
             return response()->json(['error' => 'Failed to update product!'], 422);
         }
