@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $page = ( request()->get( 'page' ) ) ? request()->get( 'page' ) : 1;
-        $products = Product::paginate( 10 );
+        $products = Product::orderBy('id', 'desc')->paginate( 10 );
         return ProductResource::collection($products);
     }
 
@@ -27,8 +27,8 @@ class ProductController extends Controller
             $data['image'] = time().$request->image->getClientOriginalName();
             $request->image->storeAs('/public', $data['image']);
             $product = Product::create($data);
-            return response()->json( [ 
-                'product' => $product, 
+            return response()->json( [
+                'product' => $product,
                 'message' => 'Product Added Successfully',
                 'code' => 'success',
              ], 201 );
@@ -66,7 +66,7 @@ class ProductController extends Controller
         }
         try {
             $product->save();
-            return response()->json( [ 
+            return response()->json( [
                 'product' => $product, 'message' => 'Product Update Successfully',
                 'code' => 'success',
              ], 201 );
@@ -84,7 +84,8 @@ class ProductController extends Controller
                 Product::destroy($id);
                 unlink(public_path().'/storage/'.$product->image);
             }
-            return response()->json( [ 'message' => 'Product delete successfully' ], 201 );
+            return response()->json([ 'message' => 'Product delete successfully',
+                                        'code' => 'deleted' ]);
         } catch ( Exception $e ) {
             return response()->json(['error' => 'Failed to delete product!'], 422);
         }

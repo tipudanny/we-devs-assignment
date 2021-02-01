@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class ProductResource extends JsonResource
 {
@@ -17,7 +18,7 @@ class ProductResource extends JsonResource
         return [
             'id'            => $this->id,
             'title'         => $this->title,
-            'description'   => $this->description,
+            'description'   => Str::limit($this->description, 100, '.....'),
             'price'         => $this->price,
             'image'         => '/storage/'.$this->image,
         ];
