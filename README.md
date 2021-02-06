@@ -4,10 +4,9 @@
 For user registration uncomment the registration route.
 
 ## Dummy User
-Run command 
-###php artisan migrate:fresh --seed
-get user info email =  tipu@gmail.com
-and Password = 12345678
+- Run command php artisan migrate:fresh --seed 
+- get user info email =  tipu@gmail.com
+- and Password = 12345678
 
 ## Security Vulnerabilities
 
